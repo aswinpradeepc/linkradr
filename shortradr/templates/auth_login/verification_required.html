@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Account Verification Required</title>
+</head>
+<body>
+    <h2>Your account is not verified</h2>
+    <p>Please check your email for the verification link or OTP.</p>
+    <p>If you haven't received an email, click the button below to resend the verification email.</p>
+
+    <form action="{% url 'resend_verification' email=email %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Send Verification Email</button>
+    </form>
+
+    <a href="{% url 'login' %}">Back to Login</a>
+</body>
+</html>
