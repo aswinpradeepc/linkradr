@@ -10,7 +10,7 @@ class URLShortenerInline(admin.TabularInline):
 
 class CustomUserAdmin(UserAdmin):
     inlines = [URLShortenerInline]
-    list_display = ('email', 'username', 'is_verified', 'shortened_urls_count')
+    list_display = ('email', 'username', 'is_verified', 'shortened_urls_count','is_staff')
 
     def shortened_urls_count(self, obj):
         return obj.shortened_urls.count()

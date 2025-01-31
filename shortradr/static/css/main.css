@@ -1,0 +1,129 @@
+/* Global Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Root Variables for Easy Theming */
+:root {
+    --bg-primary: #121212;
+    --text-primary: #ffffff;
+    --accent-color: #00aaff;
+    --border-color: rgba(255,255,255,0.3);
+    --glass-bg: rgba(30,30,30,0.6);
+}
+
+/* Body and HTML Styles */
+body, html {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    position: relative;
+    overflow: hidden;
+    line-height: 1.6;
+}
+
+/* SVG Background Styles */
+svg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.7;
+}
+
+/* Top Bar Styles */
+.top-bar {
+    position: absolute;
+    top: 20px;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 600;
+    z-index: 10;
+}
+
+.branding {
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Form Styles */
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    max-width: 500px;
+    margin-top: -50px;
+}
+
+.btn-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+
+/* Input Styles */
+input {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: whitesmoke;
+    box-shadow: 0 0 10px rgba(0, 170, 255, 0.3);
+}
+
+input::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+/* Responsive Typography */
+h1 {
+    margin-bottom: 20px;
+    font-size: clamp(24px, 5vw, 36px);
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+    .top-bar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    form {
+        width: 90%;
+    }
+}
+.mobile-nav {
+    display: none;
+}

@@ -10,14 +10,14 @@ def generate_short_url():
 class URLShortener(models.Model):
     actual_url = models.URLField()
     shortened_url = models.CharField(max_length=15, unique=True,  db_index=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name='shortened_urls')
-    timestamp = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE, related_name='shortened_urls')
+    created_at = models.DateTimeField(default=timezone.now)
     click_count = models.PositiveIntegerField(default=0)
     last_accessed = models.DateTimeField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     
     class Meta:
-        ordering = ['-timestamp']
+        ordering = ['-created_at']
         verbose_name_plural = "URL Shorteners"
         unique_together = ('actual_url', 'user')
 

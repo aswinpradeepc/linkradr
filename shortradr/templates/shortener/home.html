@@ -1,21 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Welcome to URL Shortener</h1>
-        {% csrf_token %}
-        <form action="/shorten/" method="post">
-            {% csrf_token %}
-            <label for="url">Enter your URL:</label>
-            <input type="url" id="url" name="url" required>
-            <button type="submit">Shorten</button>
-        </form>
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="/shorten/" method="post">
+    {% csrf_token %}
+    <input type="url" id="url" name="url" placeholder="Enter your URL..." required>
+    <div class="btn-container">
+        <button type="submit" class="btn-shorten">Shorten</button>
     </div>
-</body>
-</html>
+</form>
+{% endblock %}

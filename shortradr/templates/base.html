@@ -3,50 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Website{% endblock %}</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
-        nav {
-            background: #333;
-            padding: 10px;
-        }
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        .container {
-            margin-top: 20px;
-            padding: 20px;
-        }
-    </style>
+    <title>{% block title %}LinkRadr{% endblock %}</title>
+    
+    <!-- Font & CSS Links -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/button.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+
+
+    <!-- Additional Head Content -->
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
-
-    <nav>
-        <a href="/">Home</a>
-        {% if user.is_authenticated %}
-            <span>Welcome, {{ user.first_name }}!</span>
-            <a href="{% url 'logout' %}">Logout</a>
-        {% else %}
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'signup' %}">Sign Up</a>
-        {% endif %}
-    </nav>
-
-    <div class="container">
-        {% block content %}
-        {% endblock %}
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay">
+        <div class="mobile-nav-content">
+            <a href="/" class="mobile-nav-link">Home</a>
+            {% if user.is_authenticated %}
+                <a href="/profile" class="mobile-nav-link">Profile</a>
+                <a href="/logout" class="mobile-nav-link">Logout</a>
+            {% else %}
+                <a href="/login" class="mobile-nav-link">Login</a>
+                <a href="/signup" class="mobile-nav-link">Sign Up</a>
+            {% endif %}
+        </div>
     </div>
 
+    <!-- Top Navigation -->
+    <div class="top-bar">
+        <div class="branding">LinkRadr</div>
+        
+        <!-- Desktop Navigation -->
+        <div class="auth-buttons desktop-nav">
+            {% if user.is_authenticated %}
+                <a href="/profile">Profile</a>
+            {% else %}
+                <a href="/login">Login</a>
+                <a href="/signup">Sign Up</a>
+            {% endif %}
+        </div>
+        
+        <!-- Mobile Hamburger -->
+        <div class="hamburger-menu mobile-nav">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <!-- Main Content Block -->
+    {% block content %}{% endblock %}
+
+    <!-- JavaScript -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_scripts %}{% endblock %}
 </body>
 </html>
