@@ -7,6 +7,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse
 from .forms import SignUpForm, LoginForm, OTPVerificationForm
+from django.contrib.auth import logout
 
 User = get_user_model()
 
@@ -120,3 +121,6 @@ def verify_otp(request):
     return render(request, "auth_login/verify_otp.html", {"form": form})
 
 
+def user_logout(request):
+    logout(request)
+    return redirect('home')

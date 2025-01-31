@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load static %}
+<!-- <img src="{% static 'img/cusat.svg' %}" alt="Shortradr logo" > -->
 <div class="container">
-    <h1>Shorten Your Links with LinkRadr</h1>
+    <h1>LinkRadr - URL Shortener</h1>
     <form action="/shorten/" method="post" class="url-form">
         {% csrf_token %}
         <input type="url" id="url" name="url" placeholder="Enter your URL..." required>
