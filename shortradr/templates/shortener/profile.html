@@ -3,48 +3,81 @@
 
 {% block title %}Profile{% endblock %}
 
-
-
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
 <div class="container">
-    <h1 style="text-align: left; margin-bottom: 20px;">Hello, {{fname}}!</h1>
-    <h2 style="margin-bottom: 20px;">Your Shortened URLs</h2>
-    <table class="table" style="border: 1px solid white; border-radius: 10px; border-collapse: separate; border-spacing: 0 15px;">
-        <thead>
-            <tr style="border-bottom: 2px solid white;">
-                <th>#</th>
-                <th>Actual URL</th>
-                <th>Shortened URL</th>
-                <th>Edit</th>
-                <th>Clicks</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for url in user_urls|dictsortreversed:"id" %}
-                <tr style="border-bottom: 1px solid white; height: 50px;">
-                    <td>{{ forloop.counter }}</td>
-                    <td><a href="{{ url.actual_url }}" target="_blank">{{ url.actual_url }}</a></td>
-                    <td id="shortened-url-{{ url.id }}">
-                        <a id="shortened-link-{{ url.id }}" href="{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}" target="_blank">
-                            <span>{{ request.scheme }}://{{ request.get_host }}/</span><span id="editable-part-{{ url.id }}">{{ url.shortened_url }}</span>
-                        </a>
-                        <button onclick="copyToClipboard('{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}')" style="background: none; border: none; cursor: pointer;">
-                            <img src="{% static 'img/copy_icon.svg' %}" alt="Copy" style="width: 16px; height: 16px;">
-                        </button>
-                    </td>
-                    <td>
-                        <button id="edit-button-{{ url.id }}" onclick="editShortenedUrl('{{ url.id }}')" style="background: none; border: none; cursor: pointer;">
-                            <img src="{% static 'img/edit_icon.png' %}" alt="Edit" style="width: 16px; height: 16px;">
-                        </button>
-                        <button id="save-button-{{ url.id }}" onclick="saveShortenedUrl('{{ url.id }}')" style="background: none; border: none; cursor: pointer; display: none;">
-                            <img src="{% static 'img/save_icon.png' %}" alt="Save" style="width: 16px; height: 16px;">
-                        </button>
-                    </td>
-                    <td>{{ url.click_count }}</td>
+    <h1>Hello, {{fname}}!</h1>
+    <h2>Your Shortened URLs</h2>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Actual URL</th>
+                    <th>Shortened URL</th>
+                    <th>Edit</th>
+                    <th>Clicks</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for url in user_urls|dictsortreversed:"id" %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{{ url.actual_url }}" target="_blank">{{ url.actual_url }}</a></td>
+                        <td id="shortened-url-{{ url.id }}">
+                            <a id="shortened-link-{{ url.id }}" href="{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}" target="_blank">
+                                <span>{{ request.scheme }}://{{ request.get_host }}/</span>
+                                <span id="editable-part-{{ url.id }}">{{ url.shortened_url }}</span>
+                            </a>
+                            <button onclick="copyToClipboard('{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}')" class="icon-button">
+                                <img src="{% static 'img/copy_icon.svg' %}" alt="Copy">
+                            </button>
+                        </td>
+                        <td>
+                            <button id="edit-button-{{ url.id }}" onclick="editShortenedUrl('{{ url.id }}')" class="icon-button">
+                                <img src="{% static 'img/edit_icon.png' %}" alt="Edit">
+                            </button>
+                            <button id="save-button-{{ url.id }}" onclick="saveShortenedUrl('{{ url.id }}')" class="icon-button" style="display: none;">
+                                <img src="{% static 'img/save_icon.png' %}" alt="Save">
+                            </button>
+                        </td>
+                        <td>{{ url.click_count }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="card-container">
+        {% for url in user_urls|dictsortreversed:"id" %}
+            <div class="card">
+                <div class="card-header">#{{ forloop.counter }}</div>
+                <div class="card-content">
+                    <strong>Actual URL:</strong> <a href="{{ url.actual_url }}" target="_blank">{{ url.actual_url }}</a>
+                </div>
+                <div class="card-content" id="shortened-url-card-{{ url.id }}">
+                    <strong>Shortened URL:</strong>
+                    <a id="shortened-link-card-{{ url.id }}" href="{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}" target="_blank">
+                        <span>{{ request.scheme }}://{{ request.get_host }}/</span>
+                        <span id="editable-part-card-{{ url.id }}">{{ url.shortened_url }}</span>
+                    </a>
+                    <button onclick="copyToClipboard('{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}')" class="icon-button">
+                        <img src="{% static 'img/copy_icon.svg' %}" alt="Copy">
+                    </button>
+                </div>
+                <div class="card-content">
+                    <strong>Clicks:</strong> {{ url.click_count }}
+                </div>
+                <div class="card-actions">
+                    <button id="edit-button-card-{{ url.id }}" onclick="editShortenedUrlCard('{{ url.id }}')" class="icon-button">
+                        <img src="{% static 'img/edit_icon.png' %}" alt="Edit">
+                    </button>
+                    <button id="save-button-card-{{ url.id }}" onclick="saveShortenedUrlCard('{{ url.id }}')" class="icon-button" style="display: none;">
+                        <img src="{% static 'img/save_icon.png' %}" alt="Save">
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
 <script>
@@ -97,11 +130,47 @@ function saveShortenedUrl(urlId) {
         }
     });
 }
-</script>
 
-<style>
-    #shortened-url a span {
-        display: inline;
-    }
-</style>
+function editShortenedUrlCard(urlId) {
+    const editablePart = document.querySelector(`#editable-part-card-${urlId}`);
+    const shortenedLink = document.querySelector(`#shortened-link-card-${urlId}`);
+    const editButton = document.querySelector(`#edit-button-card-${urlId}`);
+    const saveButton = document.querySelector(`#save-button-card-${urlId}`);
+    
+    editablePart.contentEditable = true;
+    shortenedLink.removeAttribute('href');
+    editablePart.focus();
+    editButton.style.display = 'none';
+    saveButton.style.display = 'inline';
+}
+
+function saveShortenedUrlCard(urlId) {
+    const editablePart = document.querySelector(`#editable-part-card-${urlId}`);
+    const shortenedLink = document.querySelector(`#shortened-link-card-${urlId}`);
+    const editButton = document.querySelector(`#edit-button-card-${urlId}`);
+    const saveButton = document.querySelector(`#save-button-card-${urlId}`);
+    
+    const newShortenedUrl = editablePart.innerText;
+    
+    fetch(`/update_shortened_url/${urlId}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({ shortened_url: newShortenedUrl })
+    }).then(response => {
+        if (response.ok) {
+            editablePart.contentEditable = false;
+            const fullUrl = `${window.location.origin}/${newShortenedUrl}`;
+            shortenedLink.href = fullUrl;
+            shortenedLink.innerHTML = `<span>${window.location.origin}/</span><span id="editable-part-card-${urlId}">${newShortenedUrl}</span>`;
+            editButton.style.display = 'inline';
+            saveButton.style.display = 'none';
+        } else {
+            alert('Failed to update the shortened URL');
+        }
+    });
+}
+</script>
 {% endblock %}
