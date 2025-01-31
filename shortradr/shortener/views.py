@@ -10,6 +10,14 @@ def home(request):
     return render(request, 'shortener/home.html')
 
 @login_required
+def profile(request):
+    user_urls = URLShortener.objects.filter(user=request.user)
+    fname = request.user.first_name
+    print("fname",fname)
+    return render(request, 'shortener/profile.html', { 'fname': fname ,'user_urls': user_urls})
+
+
+@login_required
 def shorten_url(request):
     if request.method == 'POST':
         original_url = request.POST.get('url')

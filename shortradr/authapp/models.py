@@ -38,6 +38,10 @@ class CustomUser(AbstractUser):
         related_name='customuser_permissions_set',  # ✅ Custom related name to avoid clash
         blank=True,
     )
+    
+    def get_short_name(self):
+        """Return the short name."""
+        return self.first_name
 
     def generate_otp(self):
         """Generate a 6-digit OTP"""

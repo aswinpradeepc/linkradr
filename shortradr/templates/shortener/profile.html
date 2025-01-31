@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container">
+    <h1 style="text-align: left; margin-bottom: 20px;">Hello, {{fname}}!</h1>
+    <h2 style="margin-bottom: 20px;">Your Shortened URLs</h2>
+    <table class="table" style="border: 1px solid white; border-radius: 10px; border-collapse: separate; border-spacing: 0 15px;">
+        <thead>
+            <tr style="border-bottom: 2px solid white;">
+                <th>#</th>
+                <th>Actual URL</th>
+                <th>Shortened URL</th>
+                <th>Clicks</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for url in user_urls|dictsortreversed:"id" %}
+                <tr style="border-bottom: 1px solid white; height: 50px;">
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="{{ url.actual_url }}" target="_blank">{{ url.actual_url }}</a></td>
+                    <td>
+                        <a href="{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}" target="_blank">{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}</a>
+                        <button onclick="copyToClipboard('{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}')" style="background: none; border: none; cursor: pointer;">
+                            <img src="{% static 'img/copy_icon.svg' %}" alt="Copy" style="width: 16px; height: 16px;">
+                        </button>
+                    </td>
+                    <td>{{ url.click_count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        alert('Copied to clipboard');
+    }, function(err) {
+        console.error('Could not copy text: ', err);
+    });
+}
+</script>
+{% endblock %}
