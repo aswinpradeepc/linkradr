@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}LinkRadr{% endblock %}</title>
+    <title>{% block title %}LinkRadr -Url Shortener{% endblock %}</title>
     
     <!-- Font & CSS Links -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
 
     <!-- Additional Head Content -->
+        
     {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -35,7 +36,7 @@
 
     <!-- Top Navigation -->
     <div class="top-bar">
-        <div class="branding">LinkRadr</div>
+        <div class="branding"><a href="/">LinkRadr</a></div>
         
         <!-- Desktop Navigation -->
         <div class="auth-buttons desktop-nav">

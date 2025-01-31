@@ -1,5 +1,6 @@
 /* Desktop styles */
-.mobile-nav, .mobile-nav-overlay {
+.mobile-nav,
+.mobile-nav-overlay {
     display: none;
 }
 
@@ -109,11 +110,13 @@
     color: var(--text-primary);
     cursor: pointer;
     transition: color 0.3s ease;
-    display: none; /* Initially hidden */
+    display: none;
+    /* Initially hidden */
 }
 
 .mobile-nav-overlay.active .close-nav {
-    display: block; /* Show only when menu is active */
+    display: block;
+    /* Show only when menu is active */
 }
 
 .close-nav:hover {
@@ -121,11 +124,13 @@
 }
 
 @media screen and (max-width: 480px) {
+
     /* Adjusting the top-bar layout */
     .top-bar {
         flex-direction: row;
         align-items: center;
         padding: 15px;
+        background: #121212;
     }
 
     /* Adjusting the container padding for smaller screens */
@@ -151,6 +156,7 @@
         left: 50%;
         transform: translateX(-50%);
     }
+
     .cusat-logo img {
         width: 15rem;
     }

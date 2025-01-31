@@ -7,7 +7,12 @@ User = get_user_model()
 class SignUpForm(UserCreationForm):
     full_name = forms.CharField(max_length=100, required=True)
     email = forms.EmailField(required=True)
-
+    
+    password1 = forms.CharField(
+    label="Password",
+    widget=forms.PasswordInput,
+    help_text="Password must be at least 8 characters long and secure."
+    )    
     class Meta:
         model = User
         fields = ['full_name', 'email', 'password1', 'password2']
@@ -27,5 +32,5 @@ class LoginForm(AuthenticationForm):
     username = forms.EmailField(label="Email")  # ✅ Override username to use email
 
 class OTPVerificationForm(forms.Form):
-    email = forms.EmailField()
+    # email = forms.EmailField()
     otp = forms.CharField(max_length=6)

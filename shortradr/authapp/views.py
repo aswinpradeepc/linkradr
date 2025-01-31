@@ -11,8 +11,10 @@ from django.contrib.auth import logout
 
 User = get_user_model()
 
-def login_view(request):
+def login_view(request, email=None):
     """Handles user login."""
+    initial_data = {'username': email} if email else {}
+    
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
@@ -21,13 +23,13 @@ def login_view(request):
             user = authenticate(request, username=email, password=password)
             if user is not None:
                 if not user.is_verified:
-                    return redirect("verification_required", email=email)  # ✅ Redirect to verification page
+                    return redirect("verification_required", email=email)
                 login(request, user)
                 return redirect("/")
     else:
-        form = LoginForm()
+        form = LoginForm(initial=initial_data)
+    
     return render(request, "auth_login/login.html", {"form": form})
-
 def send_verification_email(user, request):
     """Sends an email with an activation link and OTP."""
     user.generate_otp()  # ✅ Generate OTP before sending email
@@ -78,7 +80,7 @@ def signup(request):
             user.username = user.email  # ✅ Ensure username is set to email
             user.save()
             send_verification_email(user, request)  # ✅ Send verification email
-            return HttpResponse("Check your email for an activation link or OTP.")
+            return redirect('verify_otp', email=user.email)
     else:
         form = SignUpForm()
     return render(request, "auth_login/signup.html", {"form": form})
@@ -100,24 +102,25 @@ def activate(request, uidb64, token):
     else:
         return HttpResponse("Activation link is invalid or expired.")
 
-def verify_otp(request):
+def verify_otp(request, email):
     """Verifies user via OTP."""
     if request.method == "POST":
         form = OTPVerificationForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data["email"]
             otp = form.cleaned_data["otp"]
             try:
                 user = User.objects.get(email=email, otp_code=otp)
                 user.is_active = True
                 user.is_verified = True
-                user.otp_code = None  # ✅ Clear OTP after successful verification
+                user.otp_code = None
                 user.save()
-                return HttpResponse("OTP verified! You can now log in.")
+                return redirect('login', email=email)  # Redirect to login with prefilled email
             except User.DoesNotExist:
-                return HttpResponse("Invalid OTP or email.")
+                messages.error(request, "Invalid OTP or email.")
+                return render(request, "auth_login/verify_otp.html", {"form": form})
     else:
         form = OTPVerificationForm()
+    
     return render(request, "auth_login/verify_otp.html", {"form": form})
 
 

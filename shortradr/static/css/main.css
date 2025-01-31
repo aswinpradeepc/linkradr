@@ -70,7 +70,7 @@ svg {
 
 
 
-/* Form Styles */-
+/* Form Styles */
 form {
     display: flex;
     flex-direction: column;
@@ -161,9 +161,6 @@ h2 {
         align-items: flex-start;
     }
 
-    form {
-        width: 90%;
-    }
 }
 
 /* ... (existing styles) ... */
@@ -213,4 +210,17 @@ h2 {
     font-size: 18px;
 }
 
+.helptext {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
 

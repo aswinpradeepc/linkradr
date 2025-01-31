@@ -5,13 +5,18 @@
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
 <div class="img-container cusat-logo">
-    <img src="{% static 'img/whitecusat.svg' %}" alt="Shortradr logo">
+    <picture>
+        <source media="(min-width: 768px)" srcset="{% static 'img/whitecusat.svg'%}">
+        <source media="(min-width: 480px)" srcset="{% static 'img/greyish.svg'%}">
+        <img src="{% static 'img/greyish.svg'%}" alt="Responsive Image">
+    </picture>
+    
 </div>
 <div class="img-container tagline">
     <p>Made in CUSAT<br> Made for the WORLD</p>
 </div>
 <div class="img-container center-text">
-    <p>radr.in</p>
+    <a href="https://radr.in">radr.in</a>
 </div>
 
 <div class="container">
