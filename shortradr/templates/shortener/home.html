@@ -2,7 +2,18 @@
 
 {% block content %}
 {% load static %}
-<!-- <img src="{% static 'img/cusat.svg' %}" alt="Shortradr logo" > -->
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<div class="img-container cusat-logo">
+    <img src="{% static 'img/whitecusat.svg' %}" alt="Shortradr logo">
+</div>
+<div class="img-container tagline">
+    <p>Made in CUSAT<br> Made for the WORLD</p>
+</div>
+<div class="img-container center-text">
+    <p>radr.in</p>
+</div>
+
 <div class="container">
     <h1>LinkRadr - URL Shortener</h1>
     <form action="/shorten/" method="post" class="url-form">
@@ -13,4 +24,5 @@
         </div>
     </form>
 </div>
+
 {% endblock %}

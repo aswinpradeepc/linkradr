@@ -63,6 +63,7 @@
         justify-content: space-around;
         width: 30px;
         height: 25px;
+        z-index: 100;
     }
 
     .hamburger-menu span {
@@ -97,5 +98,84 @@
 
     .close-nav:hover {
         color: var(--accent-color);
+    }
+}
+
+.close-nav {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: color 0.3s ease;
+    display: none; /* Initially hidden */
+}
+
+.mobile-nav-overlay.active .close-nav {
+    display: block; /* Show only when menu is active */
+}
+
+.close-nav:hover {
+    color: var(--accent-color);
+}
+
+@media screen and (max-width: 480px) {
+    /* Adjusting the top-bar layout */
+    .top-bar {
+        flex-direction: row;
+        align-items: center;
+        padding: 15px;
+    }
+
+    /* Adjusting the container padding for smaller screens */
+    .container {
+        padding: 15px;
+    }
+
+    /* Make form elements more mobile-friendly */
+    .url-form input {
+        width: 100%;
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .btn-shorten-home {
+        width: 100%;
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    /* Adjust image sizes */
+    .cusat-logo {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .cusat-logo img {
+        width: 15rem;
+    }
+
+    .tagline {
+        font-size: 14px;
+    }
+
+    .center-text {
+        font-size: 14px;
+        bottom: 5px;
+        left: 30px;
+    }
+
+    /* Reduce padding for smaller buttons */
+    .btn-container {
+        width: 100%;
+    }
+
+    /* Make text more readable on small screens */
+    h1 {
+        font-size: 22px;
+    }
+
+    h2 {
+        font-size: 18px;
     }
 }

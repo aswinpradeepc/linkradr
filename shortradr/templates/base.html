@@ -19,7 +19,9 @@
 
     <!-- Mobile Navigation Overlay -->
     <div class="mobile-nav-overlay">
+        
         <div class="mobile-nav-content">
+            <span class="close-nav">&times;</span>
             <a href="/" class="mobile-nav-link">Home</a>
             {% if user.is_authenticated %}
                 <a href="/profile" class="mobile-nav-link">Profile</a>
