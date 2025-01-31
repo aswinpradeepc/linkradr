@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Profile{% endblock %}
+
+
 
 {% block content %}
 <div class="container">
@@ -12,6 +15,7 @@
                 <th>#</th>
                 <th>Actual URL</th>
                 <th>Shortened URL</th>
+                <th>Edit</th>
                 <th>Clicks</th>
             </tr>
         </thead>
@@ -20,10 +24,20 @@
                 <tr style="border-bottom: 1px solid white; height: 50px;">
                     <td>{{ forloop.counter }}</td>
                     <td><a href="{{ url.actual_url }}" target="_blank">{{ url.actual_url }}</a></td>
-                    <td>
-                        <a href="{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}" target="_blank">{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}</a>
+                    <td id="shortened-url-{{ url.id }}">
+                        <a id="shortened-link-{{ url.id }}" href="{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}" target="_blank">
+                            <span>{{ request.scheme }}://{{ request.get_host }}/</span><span id="editable-part-{{ url.id }}">{{ url.shortened_url }}</span>
+                        </a>
                         <button onclick="copyToClipboard('{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}')" style="background: none; border: none; cursor: pointer;">
                             <img src="{% static 'img/copy_icon.svg' %}" alt="Copy" style="width: 16px; height: 16px;">
+                        </button>
+                    </td>
+                    <td>
+                        <button id="edit-button-{{ url.id }}" onclick="editShortenedUrl('{{ url.id }}')" style="background: none; border: none; cursor: pointer;">
+                            <img src="{% static 'img/edit_icon.png' %}" alt="Edit" style="width: 16px; height: 16px;">
+                        </button>
+                        <button id="save-button-{{ url.id }}" onclick="saveShortenedUrl('{{ url.id }}')" style="background: none; border: none; cursor: pointer; display: none;">
+                            <img src="{% static 'img/save_icon.png' %}" alt="Save" style="width: 16px; height: 16px;">
                         </button>
                     </td>
                     <td>{{ url.click_count }}</td>
@@ -41,5 +55,53 @@ function copyToClipboard(text) {
         console.error('Could not copy text: ', err);
     });
 }
+
+function editShortenedUrl(urlId) {
+    const editablePart = document.querySelector(`#editable-part-${urlId}`);
+    const shortenedLink = document.querySelector(`#shortened-link-${urlId}`);
+    const editButton = document.querySelector(`#edit-button-${urlId}`);
+    const saveButton = document.querySelector(`#save-button-${urlId}`);
+    
+    editablePart.contentEditable = true;
+    shortenedLink.removeAttribute('href');
+    editablePart.focus();
+    editButton.style.display = 'none';
+    saveButton.style.display = 'inline';
+}
+
+function saveShortenedUrl(urlId) {
+    const editablePart = document.querySelector(`#editable-part-${urlId}`);
+    const shortenedLink = document.querySelector(`#shortened-link-${urlId}`);
+    const editButton = document.querySelector(`#edit-button-${urlId}`);
+    const saveButton = document.querySelector(`#save-button-${urlId}`);
+    
+    const newShortenedUrl = editablePart.innerText;
+    
+    fetch(`/update_shortened_url/${urlId}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({ shortened_url: newShortenedUrl })
+    }).then(response => {
+        if (response.ok) {
+            editablePart.contentEditable = false;
+            const fullUrl = `${window.location.origin}/${newShortenedUrl}`;
+            shortenedLink.href = fullUrl;
+            shortenedLink.innerHTML = `<span>${window.location.origin}/</span><span id="editable-part-${urlId}">${newShortenedUrl}</span>`;
+            editButton.style.display = 'inline';
+            saveButton.style.display = 'none';
+        } else {
+            alert('Failed to update the shortened URL');
+        }
+    });
+}
 </script>
+
+<style>
+    #shortened-url a span {
+        display: inline;
+    }
+</style>
 {% endblock %}

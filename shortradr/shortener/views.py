@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import URLShortener
 from django.contrib.auth.models import User
+from django.http import HttpResponse, JsonResponse
+import json
 
 
 def home(request):
@@ -13,7 +15,6 @@ def home(request):
 def profile(request):
     user_urls = URLShortener.objects.filter(user=request.user)
     fname = request.user.first_name
-    print("fname",fname)
     return render(request, 'shortener/profile.html', { 'fname': fname ,'user_urls': user_urls})
 
 
@@ -48,3 +49,17 @@ def redirect_url(request, short_code):
     url_obj = get_object_or_404(URLShortener, shortened_url=short_code)
     url_obj.increment_clicks()
     return redirect(url_obj.actual_url)
+
+@login_required
+def update_shortened_url(request, url_id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            new_shortened_url = data.get('shortened_url')
+            url_obj = get_object_or_404(URLShortener, id=url_id, user=request.user)
+            url_obj.shortened_url = new_shortened_url
+            url_obj.save()
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
