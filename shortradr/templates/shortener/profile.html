@@ -20,8 +20,8 @@
                 </tr>
             </thead>
             <tbody>
-                {% for url in user_urls|dictsortreversed:"id" %}
-                    <tr>
+                {% for url in user_urls %}
+                    <tr class="{% if url.id|stringformat:"s" == latest_url_id %}highlight{% endif %}">
                         <td>{{ forloop.counter }}</td>
                         <td><a href="{{ url.actual_url }}" target="_blank">{{ url.actual_url }}</a></td>
                         <td id="shortened-url-{{ url.id }}">
@@ -29,7 +29,7 @@
                                 <span>{{ request.scheme }}://{{ request.get_host }}/</span>
                                 <span id="editable-part-{{ url.id }}">{{ url.shortened_url }}</span>
                             </a>
-                            <button onclick="copyToClipboard('{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}')" class="icon-button">
+                            <button onclick="copyToClipboard('{{ url.id }}')" class="icon-button">
                                 <img src="{% static 'img/copy_icon.svg' %}" alt="Copy">
                             </button>
                         </td>
@@ -48,8 +48,8 @@
         </table>
     </div>
     <div class="card-container">
-        {% for url in user_urls|dictsortreversed:"id" %}
-            <div class="card">
+        {% for url in user_urls %}
+            <div class="card {% if url.id|stringformat:"s" == latest_url_id %}highlight{% endif %}">
                 <div class="card-header">#{{ forloop.counter }}</div>
                 <div class="card-content">
                     <strong>Actual URL:</strong> <a href="{{ url.actual_url }}" target="_blank">{{ url.actual_url }}</a>
@@ -60,7 +60,7 @@
                         <span>{{ request.scheme }}://{{ request.get_host }}/</span>
                         <span id="editable-part-card-{{ url.id }}">{{ url.shortened_url }}</span>
                     </a>
-                    <button onclick="copyToClipboard('{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}')" class="icon-button">
+                    <button onclick="copyToClipboardCard('{{ url.id }}')" class="icon-button">
                         <img src="{% static 'img/copy_icon.svg' %}" alt="Copy">
                     </button>
                 </div>
@@ -81,7 +81,19 @@
 </div>
 
 <script>
-function copyToClipboard(text) {
+function copyToClipboard(urlId) {
+    const shortenedLink = document.querySelector(`#shortened-link-${urlId}`);
+    const text = shortenedLink.href;
+    navigator.clipboard.writeText(text).then(function() {
+        alert('Copied to clipboard');
+    }, function(err) {
+        console.error('Could not copy text: ', err);
+    });
+}
+
+function copyToClipboardCard(urlId) {
+    const shortenedLink = document.querySelector(`#shortened-link-card-${urlId}`);
+    const text = shortenedLink.href;
     navigator.clipboard.writeText(text).then(function() {
         alert('Copied to clipboard');
     }, function(err) {
