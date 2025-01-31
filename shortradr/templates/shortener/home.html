@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action="/shorten/" method="post">
-    {% csrf_token %}
-    <input type="url" id="url" name="url" placeholder="Enter your URL..." required>
-    <div class="btn-container">
-        <button type="submit" class="btn-shorten">Shorten</button>
-    </div>
-</form>
+<div class="container">
+    <h1>Shorten Your Links with LinkRadr</h1>
+    <form action="/shorten/" method="post" class="url-form">
+        {% csrf_token %}
+        <input type="url" id="url" name="url" placeholder="Enter your URL..." required>
+        <div class="btn-container">
+            <button type="submit" class="btn-shorten btn-shorten-home">Shorten</button>
+        </div>
+    </form>
+</div>
 {% endblock %}

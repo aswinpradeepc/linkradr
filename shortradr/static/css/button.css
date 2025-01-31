@@ -1,9 +1,49 @@
 /* Button Container */
 .btn-container {
-    position: relative;
     width: 100%;
     margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }
+
+/* Button Styles */
+.btn-shorten, .btn-auth {
+    padding: 15px 30px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.btn-shorten:hover, .btn-auth:hover {
+    border-color: var(--accent-color);
+    background: rgba(50,50,50,0.8);
+    transform: scale(1.05);
+}
+
+/* Auth Buttons Styles */
+.auth-buttons a {
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.auth-buttons a:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+/* ... (existing styles) ... */
 
 /* Shorten Button Styles */
 .btn-shorten {
@@ -21,7 +61,14 @@
     overflow: hidden;
 }
 
-.btn-shorten::before {
+/* Special styles for the home page shorten button */
+.btn-shorten-home {
+    width: 100%;
+    max-width: 200px;
+    margin-top: 20px;
+}
+
+.btn-shorten-home::before {
     content: '';
     position: absolute;
     top: 0;
@@ -37,35 +84,14 @@
     transition: all 0.5s ease;
 }
 
-.btn-shorten:hover {
+.btn-shorten-home:hover {
     border-color: white;
     background: rgba(50,50,50,0.8);
     transform: scale(1.05);
 }
 
-.btn-shorten:hover::before {
+.btn-shorten-home:hover::before {
     left: 100%;
 }
 
-/* Auth Buttons Styles */
-.auth-buttons a {
-    position: relative;
-    margin-left: 15px;
-    color: rgba(255,255,255,0.7);
-    text-decoration: none;
-    padding: 10px 20px;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-radius: 10px;
-    background: rgba(30,30,30,0.6);
-    backdrop-filter: blur(10px);
-    transition: color 0.3s ease;
-}
-
-.auth-buttons a:hover {
-    color: white;
-}
-
-/* Remove all additional pseudo-element and hover animations */
-.auth-buttons a::before {
-    display: none;
-}
+/* ... (existing styles) ... */

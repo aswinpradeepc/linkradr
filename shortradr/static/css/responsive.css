@@ -1,17 +1,101 @@
+/* Desktop styles */
+.mobile-nav, .mobile-nav-overlay {
+    display: none;
+}
+
+/* Mobile styles */
 @media screen and (max-width: 768px) {
     .top-bar {
-        display: flex;
+        flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        padding: 15px;
-        width: 100%;
-    }
-
-    .hamburger-menu {
-        display: block;
     }
 
     .desktop-nav {
         display: none;
+    }
+
+    .mobile-nav {
+        display: block;
+    }
+
+    .mobile-nav-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        z-index: 100;
+    }
+
+    .mobile-nav-overlay.active {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .mobile-nav-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .mobile-nav-link {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-size: 24px;
+        margin: 15px 0;
+        transition: color 0.3s ease;
+    }
+
+    .mobile-nav-link:hover {
+        color: var(--accent-color);
+    }
+
+    .hamburger-menu {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 25px;
+    }
+
+    .hamburger-menu span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: var(--text-primary);
+        transition: all 0.3s ease;
+    }
+
+    .hamburger-menu.active span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger-menu.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger-menu.active span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .close-nav {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 30px;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .close-nav:hover {
+        color: var(--accent-color);
     }
 }
