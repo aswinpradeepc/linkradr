@@ -15,5 +15,6 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./staticfiles:/code/staticfiles
     depends_on:
       - web
