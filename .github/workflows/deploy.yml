@@ -20,7 +20,7 @@ jobs:
         run: |
           docker build -t linkradr .
           docker tag linkradr:latest aswinpradeepc/linkradr:latest
-          docker push my-dockerhub-username/my-app:latest
+          docker push aswinpradeepc/linkradr:latest
 
       - name: SSH into EC2 and deploy
         uses: appleboy/ssh-action@master
