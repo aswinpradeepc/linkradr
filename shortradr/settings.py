@@ -34,6 +34,19 @@ DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
 #get allowed hosts from env
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').strip("[]").replace("'", "").split(',')
 
+
+# Application definition
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'authapp',
+    'shortener',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
