@@ -21,5 +21,6 @@ COPY . /code/
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
-# Run the Django development server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+EXPOSE 9000
+
+ENTRYPOINT ["./scripts/run.sh"]
