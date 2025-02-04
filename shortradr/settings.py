@@ -39,9 +39,6 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').strip("[]").replace("'", "").split(',
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
 
 # Application definition
 INSTALLED_APPS = [
