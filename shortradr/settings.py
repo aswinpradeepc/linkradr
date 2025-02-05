@@ -33,6 +33,7 @@ DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
 
 #get allowed hosts from env
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').strip("[]").replace("'", "").split(',')
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS').strip("[]").replace("'", "").split(',')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -144,3 +145,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = str(os.getenv('EMAIL_HOST_USER'))
 EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_HOST_PASSWORD'))
+
