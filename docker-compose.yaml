@@ -21,6 +21,8 @@ services:
       - ./media:/code/media
       - /etc/letsencrypt/live/link.radr.in/fullchain.pem:/etc/letsencrypt/live/link.radr.in/fullchain.pem:ro
       - /etc/letsencrypt/live/link.radr.in/privkey.pem:/etc/letsencrypt/live/link.radr.in/privkey.pem:ro 
+      - /etc/letsencrypt/archive/link.radr.in/fullchain1.pem:/etc/letsencrypt/live/link.radr.in/fullchain.pem:ro
+      - /etc/letsencrypt/archive/link.radr.in/privkey1.pem:/etc/letsencrypt/live/link.radr.in/privkey.pem:ro
     depends_on:
       - web
     networks:
