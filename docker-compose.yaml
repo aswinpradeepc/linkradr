@@ -19,9 +19,8 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./staticfiles:/code/staticfiles
       - ./media:/code/media
-      - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
-      - /etc/letsencrypt/archive:/etc/letsencrypt/archive:ro
-      - /etc/letsencrypt/renewal:/etc/letsencrypt/renewal:ro
+      - /etc/letsencrypt/live/link.radr.in/fullchain.pem:/etc/letsencrypt/live/link.radr.in/fullchain.pem:ro
+      - /etc/letsencrypt/live/link.radr.in/privkey.pem:/etc/letsencrypt/live/link.radr.in/privkey.pem:ro 
     depends_on:
       - web
     networks:
