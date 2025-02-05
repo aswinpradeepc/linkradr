@@ -19,8 +19,7 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./staticfiles:/code/staticfiles
       - ./media:/code/media
-      - /etc/letsencrypt/archive/link.radr.in/fullchain2.pem:/etc/letsencrypt/live/link.radr.in/fullchain.pem:ro
-      - /etc/letsencrypt/archive/link.radr.in/privkey2.pem:/etc/letsencrypt/live/link.radr.in/privkey.pem:ro
+      - /etc/letsencrypt/archive/link.radr.in/
     depends_on:
       - web
     networks:
