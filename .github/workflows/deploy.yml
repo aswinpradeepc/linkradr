@@ -1,34 +1,30 @@
-name: Deploy to AWS EC2 with Docker Hub
-
+name: Deploy to AWS EC2
 on:
   push:
     branches:
-      - main  
-
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
+      - uses: actions/checkout@v3
+      
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
-
+      
       - name: Build and push Docker image
         run: |
-          docker build -t linkradr .
-          docker tag linkradr:latest aswinpradeepc/linkradr:latest
+          docker build -t aswinpradeepc/linkradr:latest .
           docker push aswinpradeepc/linkradr:latest
-
-      - name: SSH into EC2 and deploy
+      
+      - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            cd /path/to/your/project
             sudo docker pull aswinpradeepc/linkradr:latest
-            sudo docker compose down || true
+            sudo docker compose down
             sudo docker compose up -d
