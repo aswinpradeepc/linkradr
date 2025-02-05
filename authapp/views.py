@@ -36,9 +36,9 @@ def send_verification_email(user, request):
     token = default_token_generator.make_token(user)
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     domain = get_current_site(request).domain
-    link = f"http://{domain}/activate/{uid}/{token}/"
+    link = f"https://{domain}/auth/activate/{uid}/{token}/"
 
-    subject = "Verify Your Account"
+    subject = "Verify Your LinkRadr Account"
     message = f"""
     Hi {user.first_name},
     
@@ -52,7 +52,7 @@ def send_verification_email(user, request):
     If you did not sign up, please ignore this email.
     """
 
-    send_mail(subject, message, "noreply@example.com", [user.email])
+    send_mail(subject, message, "link@radr.in", [user.email])
 
 def verification_required(request, email):
     """Page for unverified users to request a verification email."""
@@ -98,7 +98,8 @@ def activate(request, uidb64, token):
         user.is_verified = True
         user.otp_code = None  # ✅ Clear OTP after verification
         user.save()
-        return HttpResponse("Account activated! You can now log in.")
+        #retrun to login screen with email prefilled
+        return redirect('login', email=user.email)
     else:
         return HttpResponse("Activation link is invalid or expired.")
 
