@@ -19,7 +19,7 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./staticfiles:/code/staticfiles
       - ./media:/code/media
-      - /etc/letsencrypt/archive/link.radr.in/
+      - /etc/letsencrypt/archive/link.radr.in:/etc/letsencrypt/archive/link.radr.in
     depends_on:
       - web
     networks:
