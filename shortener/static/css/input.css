@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen;
+    }
+
+    img, svg {
+        @apply max-h-[120px] w-auto;
+    }
+}
+
+@layer components {
+    .card {
+        @apply bg-gray-800/40 backdrop-blur-xl border border-white/5 rounded-2xl p-8 shadow-xl;
+    }
+
+    .input {
+        @apply w-full bg-gray-900/50 border border-white/10 rounded-xl px-4 text-white placeholder-white/40
+        focus:outline-none focus:ring-2 focus:ring-kerala-gold/50 focus:border-transparent
+        transition-all duration-200;
+    }
+
+    .input-lg {
+        @apply h-14 text-lg;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center rounded-xl font-medium
+        transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900;
+    }
+
+    .btn-lg {
+        @apply px-6 py-3 text-lg;
+    }
+
+    .btn-md {
+        @apply px-4 py-2;
+    }
+
+    .btn-primary {
+        @apply bg-gradient-to-r from-kerala-gold to-kerala-red text-gray-900 
+        hover:from-kerala-gold/90 hover:to-kerala-red/90 focus:ring-kerala-gold;
+    }
+
+    .btn-outline {
+        @apply border border-white/10 hover:bg-white/5 focus:ring-white/20;
+    }
+
+    .nav-link {
+        @apply text-white/70 hover:text-white transition-colors duration-200;
+    }
+
+    /* Form specific styles */
+    .form-group {
+        @apply space-y-2;
+    }
+
+    .form-label {
+        @apply block text-sm font-medium text-white/80;
+    }
+
+    .form-error {
+        @apply mt-1 text-sm text-kerala-red;
+    }
+
+    .form-hint {
+        @apply mt-1 text-sm text-white/60;
+    }
+
+    .form-divider {
+        @apply my-6 border-t border-white/5;
+    }
+
+    /* Logo sizes */
+    .logo {
+        @apply w-auto h-12 max-w-full;
+    }
+
+    /* Image sizes */
+    .icon {
+        @apply w-5 h-5;
+    }
+
+    .icon-lg {
+        @apply w-8 h-8;
+    }
+}

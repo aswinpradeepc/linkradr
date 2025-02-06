@@ -1,32 +1,71 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% load static %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Hero Section -->
+    <div class="text-center py-20">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
+            Shorten Your Links with
+            <span class="bg-gradient-to-r from-kerala-gold to-kerala-red bg-clip-text text-transparent">
+                Kerala Style
+            </span>
+        </h1>
+        <p class="text-lg text-white/80 max-w-2xl mx-auto mb-12">
+            Transform your long URLs into elegant, shareable links
+        </p>
+    </div>
 
-<div class="img-container cusat-logo">
-    <picture>
-        <source media="(min-width: 768px)" srcset="{% static 'img/whitecusat.svg'%}">
-        <source media="(min-width: 480px)" srcset="{% static 'img/greyish.svg'%}">
-        <img src="{% static 'img/greyish.svg'%}" alt="Responsive Image">
-    </picture>
-    
-</div>
-<div class="img-container tagline">
-    <p>Made in CUSAT<br> Made for the WORLD</p>
-</div>
-<div class="img-container center-text">
-    <a href="https://radr.in">radr.in</a>
-</div>
+    <!-- URL Shortener Form -->
+    <div class="max-w-2xl mx-auto">
+        <div class="card">
+            <form method="post" action="{% url 'shorten_url' %}" class="space-y-6">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="relative flex items-center">
+                        <input type="url" name="url" required 
+                               class="input input-lg pr-36"
+                               placeholder="Paste your long URL here">
+                        <button type="submit" 
+                                class="btn btn-primary btn-md absolute right-1.5">
+                            Shorten URL
+                        </button>
+                    </div>
+                </div>
+            </form>
 
-<div class="container">
-    <h1>LinkRadr - URL Shortener</h1>
-    <form action="/shorten/" method="post" class="url-form">
-        {% csrf_token %}
-        <input type="url" id="url" name="url" placeholder="Enter your URL..." required>
-        <div class="btn-container">
-            <button type="submit" class="btn-shorten btn-shorten-home">Shorten</button>
+            {% if shortened_url %}
+            <div class="mt-8 p-6 bg-gray-900/50 rounded-xl border border-white/10">
+                <div class="flex items-center justify-between gap-4">
+                    <div class="min-w-0 flex-1">
+                        <p class="text-sm text-white/60 mb-1">Your shortened URL:</p>
+                        <p class="text-lg font-medium text-kerala-gold truncate">{{ shortened_url }}</p>
+                    </div>
+                    <button onclick="navigator.clipboard.writeText('{{ shortened_url }}')"
+                            class="btn btn-outline btn-md">
+                        Copy
+                    </button>
+                </div>
+            </div>
+            {% endif %}
         </div>
-    </form>
-</div>
+    </div>
 
+    <!-- Features Section -->
+    <div class="mt-32 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="card">
+            <h3 class="text-xl font-semibold mb-3">Lightning Fast</h3>
+            <p class="text-white/60">Experience instant link shortening with our optimized service.</p>
+        </div>
+
+        <div class="card">
+            <h3 class="text-xl font-semibold mb-3">Secure & Reliable</h3>
+            <p class="text-white/60">Your links are protected with enterprise-grade security.</p>
+        </div>
+
+        <div class="card">
+            <h3 class="text-xl font-semibold mb-3">Analytics</h3>
+            <p class="text-white/60">Track your link performance with detailed analytics.</p>
+        </div>
+    </div>
+</div>
 {% endblock %}

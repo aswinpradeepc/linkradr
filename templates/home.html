@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Hero Section -->
+    <div class="text-center py-20">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
+            Shorten Your Links with
+            <span class="bg-gradient-to-r from-kerala-gold to-kerala-red bg-clip-text text-transparent">
+                Kerala Style
+            </span>
+        </h1>
+        <p class="text-lg text-white/80 max-w-2xl mx-auto mb-12">
+            Transform your long URLs into elegant, shareable links
+        </p>
+    </div>
+
+    <!-- URL Shortener Form -->
+    <div class="max-w-2xl mx-auto">
+        <div class="card">
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="relative">
+                        <input type="url" name="original_url" required 
+                               class="input pr-32 h-14 text-lg"
+                               placeholder="Paste your long URL here">
+                        <button type="submit" 
+                                class="btn btn-primary absolute right-1.5 top-1/2 -translate-y-1/2 h-11 py-0">
+                            Shorten URL
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            {% if shortened_url %}
+            <div class="mt-8 p-6 bg-gray-900/50 rounded-xl border border-white/10">
+                <div class="flex items-center justify-between gap-4">
+                    <div class="min-w-0 flex-1">
+                        <p class="text-sm text-white/60 mb-1">Your shortened URL:</p>
+                        <p class="text-lg font-medium text-kerala-gold truncate">{{ shortened_url }}</p>
+                    </div>
+                    <button onclick="navigator.clipboard.writeText('{{ shortened_url }}')"
+                            class="btn btn-outline py-2 flex-shrink-0">
+                        Copy
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="mt-32 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="card">
+            <h3 class="text-xl font-semibold mb-3">Lightning Fast</h3>
+            <p class="text-white/60">Experience instant link shortening with our optimized service.</p>
+        </div>
+
+        <div class="card">
+            <h3 class="text-xl font-semibold mb-3">Secure & Reliable</h3>
+            <p class="text-white/60">Your links are protected with enterprise-grade security.</p>
+        </div>
+
+        <div class="card">
+            <h3 class="text-xl font-semibold mb-3">Analytics</h3>
+            <p class="text-white/60">Track your link performance with detailed analytics.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

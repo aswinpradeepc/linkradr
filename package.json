@@ -1,0 +1,13 @@
+{
+  "name": "linkradr",
+  "version": "1.0.0",
+  "description": "A modern URL shortener with Kerala-inspired design",
+  "scripts": {
+    "build": "tailwindcss -i ./shortener/static/css/input.css -o ./shortener/static/css/main.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35"
+  }
+}

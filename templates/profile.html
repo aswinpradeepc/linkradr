@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Profile Header -->
+    <div class="mb-12">
+        <h1 class="text-3xl font-bold mb-4">Welcome{% if fname %}, {{ fname }}{% endif %}</h1>
+        <p class="text-white/60">Manage your shortened links and track their performance.</p>
+    </div>
+
+    <!-- Links Table -->
+    <div class="card overflow-hidden">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-xl font-semibold">Your Links</h2>
+            <a href="{% url 'home' %}" class="btn btn-primary btn-md">Create New Link</a>
+        </div>
+
+        {% if user_urls %}
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="text-left border-b border-white/10">
+                        <th class="pb-4 font-medium text-white/60">Original URL</th>
+                        <th class="pb-4 font-medium text-white/60">Short URL</th>
+                        <th class="pb-4 font-medium text-white/60 text-center">Clicks</th>
+                        <th class="pb-4 font-medium text-white/60">Created</th>
+                        <th class="pb-4 font-medium text-white/60 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/10">
+                    {% for url in user_urls %}
+                    <tr class="group" {% if latest_url_id == url.id|stringformat:"i" %}id="latest"{% endif %}>
+                        <td class="py-4">
+                            <div class="max-w-xs truncate text-white/80">
+                                {{ url.actual_url }}
+                            </div>
+                        </td>
+                        <td class="py-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-kerala-gold">{{ url.shortened_url }}</span>
+                            </div>
+                        </td>
+                        <td class="py-4 text-center">
+                            <span class="text-white/80">{{ url.clicks }}</span>
+                        </td>
+                        <td class="py-4">
+                            <span class="text-white/60">{{ url.created_at|date:"M d, Y" }}</span>
+                        </td>
+                        <td class="py-4">
+                            <div class="flex items-center justify-end space-x-2">
+                                <button onclick="navigator.clipboard.writeText('{{ url.shortened_url }}')"
+                                        class="btn btn-outline btn-md">
+                                    Copy
+                                </button>
+                                <form method="post" action="{% url 'delete_link' url.id %}" class="inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline btn-md text-kerala-red">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-12">
+            <p class="text-white/60 mb-4">You haven't created any links yet.</p>
+            <a href="{% url 'home' %}" class="btn btn-primary btn-md">Create Your First Link</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if latest_url_id %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const latestElement = document.getElementById('latest');
+        if (latestElement) {
+            latestElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            latestElement.classList.add('bg-kerala-gold/5');
+        }
+    });
+</script>
+{% endif %}
+{% endblock %}
