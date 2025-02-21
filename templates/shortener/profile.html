@@ -26,19 +26,21 @@
                         <td><a href="{{ url.actual_url }}" target="_blank">{{ url.actual_url }}</a></td>
                         <td id="shortened-url-{{ url.id }}">
                             <a id="shortened-link-{{ url.id }}" href="{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}" target="_blank">
-                                <span>{{ request.scheme }}://{{ request.get_host }}/</span>
+                                <span>https://radr.in/</span>
                                 <span id="editable-part-{{ url.id }}">{{ url.shortened_url }}</span>
                             </a>
+                            <div class="copy-button">
                             <button onclick="copyToClipboard('{{ url.id }}')" class="icon-button">
-                                <img src="{% static 'img/copy_icon.svg' %}" alt="Copy">
+                                <img src="{% static 'img/copy_iconv3.png' %}" alt="Copy">
                             </button>
+                            </div>
                         </td>
                         <td>
                             <button id="edit-button-{{ url.id }}" onclick="editShortenedUrl('{{ url.id }}')" class="icon-button">
-                                <img src="{% static 'img/edit_icon.png' %}" alt="Edit">
+                                <img src="{% static 'img/edit_iconv2.png' %}" alt="Edit">
                             </button>
                             <button id="save-button-{{ url.id }}" onclick="saveShortenedUrl('{{ url.id }}')" class="icon-button" style="display: none;">
-                                <img src="{% static 'img/save_icon.png' %}" alt="Save">
+                                <img src="{% static 'img/save_iconv2.png' %}" alt="Save">
                             </button>
                         </td>
                         <td>{{ url.click_count }}</td>
@@ -57,26 +59,31 @@
                 <div class="card-content" id="shortened-url-card-{{ url.id }}">
                     <strong>Shortened URL:</strong>
                     <a id="shortened-link-card-{{ url.id }}" href="{{ request.scheme }}://{{ request.get_host }}/{{ url.shortened_url }}" target="_blank">
-                        <span>{{ request.scheme }}://{{ request.get_host }}/</span>
+                        <span>https://radr.in/</span>
                         <span id="editable-part-card-{{ url.id }}">{{ url.shortened_url }}</span>
                     </a>
+                    <div class="copy-button">
                     <button onclick="copyToClipboardCard('{{ url.id }}')" class="icon-button">
-                        <img src="{% static 'img/copy_icon.svg' %}" alt="Copy">
+                        <img src="{% static 'img/copy_iconv3.png' %}" alt="Copy">
                     </button>
+                    </div>
                 </div>
                 <div class="card-content">
                     <strong>Clicks:</strong> {{ url.click_count }}
                 </div>
                 <div class="card-actions">
                     <button id="edit-button-card-{{ url.id }}" onclick="editShortenedUrlCard('{{ url.id }}')" class="icon-button">
-                        <img src="{% static 'img/edit_icon.png' %}" alt="Edit">
+                        <img src="{% static 'img/edit_iconv2.png' %}" alt="Edit">
                     </button>
                     <button id="save-button-card-{{ url.id }}" onclick="saveShortenedUrlCard('{{ url.id }}')" class="icon-button" style="display: none;">
-                        <img src="{% static 'img/save_icon.png' %}" alt="Save">
+                        <img src="{% static 'img/save_iconv2.png' %}" alt="Save">
                     </button>
                 </div>
             </div>
         {% endfor %}
+    </div>
+    <div class="auth-buttons">
+    <a href="/">Convert More</a>
     </div>
 </div>
 
@@ -112,6 +119,13 @@ function editShortenedUrl(urlId) {
     editablePart.focus();
     editButton.style.display = 'none';
     saveButton.style.display = 'inline';
+
+    editablePart.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            saveShortenedUrl(urlId);
+        }
+    });
 }
 
 function saveShortenedUrl(urlId) {
@@ -154,6 +168,13 @@ function editShortenedUrlCard(urlId) {
     editablePart.focus();
     editButton.style.display = 'none';
     saveButton.style.display = 'inline';
+
+    editablePart.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            saveShortenedUrlCard(urlId);
+        }
+    });
 }
 
 function saveShortenedUrlCard(urlId) {
